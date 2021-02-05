@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="normalize.css">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="media-queries.css">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
+    integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+  <title>Document</title>
+</head>
+
+<body>
+  <div class="wrapper">
+    <div class="container">
+
+      <header class="header">
+        <div class="header__logo">
+          <img class="header__logo__img" src="img/logo.png" alt="logo">
+        </div>
+        <div class="header__links">
+          <span data-header-link class="header__link-one">My account</span>
+          <span data-header-link class="header__link-two">Settings</span>
+          <span data-header-link class="header__link-three active">Logout</span>
+        </div>
+      </header>
+
+
+      <nav class="nav">
+        <ul>
+          <li class="nav__item"><a data-nav-item class="first active" href="#">Home</a></li>
+          <li class="nav__item"><a data-nav-item href="#">About us</a></li>
+          <li class="nav__item"><a data-nav-item href="#">Our services</a></li>
+          <li class="nav__item"><a data-nav-item href="#">Deposits</a></li>
+          <li class="nav__item"><a data-nav-item href="#">FAQs</a></li>
+          <li class="nav__item"><a data-nav-item href="#">Contact us</a></li>
+          <li class="nav__item"><span>Call us: (2457) 555 222 333</span></li>
+        </ul>
+      </nav>
+
+
+      <section class="section-carouslog">
+        <div class="carousel">
+          <img class="carousel__item fade" src="img/banner.png" alt="gold photo">
+          <img class="carousel__item fade" src="img/banner2.png" alt="gold photo">
+          <img class="carousel__item fade" src="img/banner3.png" alt="gold photo">
+          <img class="carousel__item fade" src="img/banner4.png" alt="gold photo">
+          <div class="carousel__dotsblock">
+            <div class="carousel__dotborder active">
+              <div class="carousel__dot" data-dot="0"></div>
+            </div>
+            <div class="carousel__dotborder">
+              <div class="carousel__dot" data-dot="1"></div>
+            </div>
+            <div class="carousel__dotborder">
+              <div class="carousel__dot" data-dot="2"></div>
+            </div>
+            <div class="carousel__dotborder">
+              <div class="carousel__dot" data-dot="3"></div>
+            </div>
+          </div>
+        </div>
+
+        <form class="login" action="" method="GET">
+          <img class="login__background" src="img/login.png" alt="login">
+          <span class="login__title"><img src="img/user__pict.png" alt="user picture"> Customer login</span>
+          <input class="user__name log__input" type="text" placeholder="User name">
+          <input class="password log__input" type="text" placeholder="Password">
+          <span class="login__checkrow"><input class="login__check" type="checkbox">
+            Remember me <br> Forget your password</span>
+          <button class="login__loginbtn">Log in</button>
+          <span class="login__memberrow">Not a member?</span>
+          <button class="login__openaccbtn">Open an account</button>
+        </form>
+      </section>
+
+
+      <section class="section-info">
+        <div class="info__special">
+          <div class="title">Our <span class="text__red">Specialties</span></div>
+          <ul class="check__block">
+            <li>
+              &ensp;<span class="text__red"><i class="fas fa-check"></i>&emsp;</span>
+              Lorem ipsum dolor sit amet, consectetur
+            </li>
+
+            <li>
+              &ensp;<span class="text__red"><i class="fas fa-check"></i>&emsp;</span>
+              Lorem ipsum dolor sit amet, consectetur
+            </li>
+
+            <li>
+              &ensp;<span class="text__red"><i class="fas fa-check"></i>&emsp;</span>
+              Lorem ipsum dolor sit amet, consectetur
+            </li>
+
+            <li>
+              &ensp;<span class="text__red"><i class="fas fa-check"></i>&emsp;</span>
+              Lorem ipsum dolor sit amet, consectetur
+            </li>
+
+            <li>
+              &ensp;<span class="text__red"><i class="fas fa-check"></i>&emsp;</span>
+              Lorem ipsum dolor sit amet, consectetur
+            </li>
+          </ul>
+        </div>
+        <div class="info__how">
+          <div class="title">How it <span class="text__red">works</span></div>
+          <img src="img/howWorksPhoto.png" alt="how it works">
+        </div>
+      </section>
+
+    </div>
+
+    <footer class="footer">
+      <span>100% Secure</span>
+      <span>Стебенев Алексей 2020</span>
+    </footer>
+  </div>
+  <script src="scripts.js" charset="utf-8"></script>
+</body>
+
+</html>

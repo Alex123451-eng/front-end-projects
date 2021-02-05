@@ -1,0 +1,169 @@
+ /* <div class="note">
+<div class="note__header">
+  <div class="time"></div>
+  <div class="check-pen"><i class="fas fa-pen"></i></div>
+  <div class="bucket"><i class="fas fa-trash-alt"></i></div>
+</div>
+<textarea class="text"></textarea>
+</div>  */
+
+
+ .container {
+   position: relative;
+   margin: 0 auto;
+   height: 500px;
+   max-width: 500px;
+ }
+
+ .message {
+   display: none;
+   position: absolute;
+   padding: 10px 20px;
+   width: 180px;
+   border: 1px solid #b3c9ce;
+   border-radius: 4px;
+   text-align: center;
+   font: italic 14px/1.3 sans-serif;
+   color: #333;
+   background: #fff;
+   box-shadow: 3px 3px 3px rgba(0, 0, 0, .3);
+   z-index: 1;
+ }
+
+ .message.small {
+   padding: 5px 10px;
+   width: 90px;
+   font-size: 10px;
+   box-shadow: 1px 1px 3px rgba(0, 0, 0, .3);
+ }
+
+ .clear__stor__btn {
+   display: block;
+   position: absolute;
+   top: 30px;
+   left: 30px;
+   width: 30px;
+   height: 30px;
+   border-radius: 50%;
+   border: none;
+   background: #3185C7;
+   cursor: pointer;
+   z-index: 1;
+ }
+
+ .clear__stor__btn:focus {
+   outline: none;
+ }
+
+ .create__btn {
+   display: block;
+   position: absolute;
+   top: 30px;
+   right: 30px;
+   width: 30px;
+   height: 30px;
+   border-radius: 50%;
+   border: none;
+   background: #3185C7;
+   cursor: pointer;
+   z-index: 1;
+ }
+
+ .create__btn:focus {
+   outline: none;
+ }
+
+ .create__btn--item {
+   display: block;
+   background-color: #333;
+   width: 15px;
+   height: 3px;
+   transform: translateX(11%);
+ }
+
+ .create__btn--item::after {
+   display: block;
+   content: "";
+   height: 3px;
+   background-color: #333;
+   transform: rotate(90deg);
+ }
+
+ .note {
+   display: block;
+   width: 50%;
+   position: absolute;
+   left: 25%;
+   margin-bottom: 50px;
+   border: 1px solid silver;
+   box-shadow: 1px 1px 10px silver;
+ }
+
+ .note__header {
+   width: 100%;
+   display: flex;
+   height: 30px;
+   background-color: #EEEEEE;
+ }
+
+ .time {
+   flex: 8;
+   line-height: 1.9;
+   font-size: 15px;
+   font-style: italic;
+   font-weight: 600;
+   color: #333;
+   text-indent: 20px;
+ }
+
+ .check-pen {
+   flex: 1;
+   position: relative;
+ }
+
+ .check-pen i,
+ .bucket i {
+   position: absolute;
+   color: #333;
+   left: 50%;
+   top: 50%;
+   transform: translate(-50%, -50%);
+ }
+
+ .bucket {
+   flex: 1;
+   position: relative;
+ }
+
+ .bucket i {
+   cursor: pointer;
+ }
+
+ .textarea {
+   width: 100%;
+   padding: 0;
+   height: 300px;
+   resize: none;
+   display: block;
+   border: none;
+ }
+
+ .textarea:focus {
+   outline-width: 1px;
+   outline-style: solid;
+   outline-color: #333;
+ }
+
+
+ @media (max-width: 470px) {
+
+   .time {
+     text-indent: 10px;
+     font-size: 1em;
+     line-height: 2.8;
+   }
+
+   .container {
+     font-size: .7em;
+   }
+ }

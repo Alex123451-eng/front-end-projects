@@ -1,0 +1,408 @@
+html {
+  background: url(img/backgroundHTML.png);
+}
+
+ul {
+  list-style: none;
+  margin: 0;
+  padding-left: 0;
+}
+
+a {
+  text-decoration: none;
+}
+
+button:focus {
+  outline: none;
+}
+
+
+
+/* Wrapper */
+.wrapper {
+  max-width: 1030px;
+  margin: 60px auto;
+  background-color: #e9e4e7;
+  font-family: 'Open Sans', sans-serif;
+}
+
+.wrapper::before {
+  content: '';
+  background-color: #1f1f1f;
+  display: block;
+  height: 7px;
+}
+
+
+
+/* Container */
+.container {
+  margin: 0 auto;
+  max-width: 960px;
+  min-height: 630px;
+}
+
+
+
+/* Header */
+.header {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding-top: 10px;
+}
+
+.header__logo__img {
+  display: block;
+}
+
+.header__links {
+  display: flex;
+  min-width: 200px;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: 5px;
+  margin-right: 15px;
+}
+
+.header__links span {
+  cursor: pointer;
+  position: relative;
+  text-align: center;
+  font-family: 'Open Sans', sans-serif;
+  color: #595959;
+  font-size: 12px;
+}
+
+.header__link-one {
+  flex: 3;
+}
+
+.header__links span.active {
+  color: #c42d21;
+}
+
+.header__link-two,
+.header__link-three {
+  flex: 2;
+}
+
+.header__links span::before {
+  content: '';
+  width: 1px;
+  height: 12px;
+  display: block;
+  position: absolute;
+  left: -2px;
+  background-color: #595959;
+}
+
+.header__links span:first-child::before {
+  display: none;
+}
+
+.header__links span:last-child::before {
+  left: 1px;
+}
+
+
+
+/* Nav */
+.nav {
+  margin-top: 7px;
+  font-size: 16px;
+}
+
+.nav ul {
+  background: linear-gradient(to top, #a21b11, #c24c3b);
+  display: flex;
+  flex-wrap: wrap;
+  border-radius: 4px;
+}
+
+.nav__item a {
+  display: block;
+  padding: .5em;
+  color: #ececec;
+  font-family: 'Sans Open', sans-serif;
+}
+
+.nav__item .first {
+  border-radius: 4px 0 0 4px;
+}
+
+.nav__item .active {
+  background: linear-gradient(to top, #1f1f1f, #454545);
+}
+
+.nav__item:last-child {
+  align-self: center;
+  text-align: end;
+  flex: 1 1 auto;
+}
+
+.nav__item:last-child span {
+  border-radius: 0 4px 4px 0;
+  display: block;
+  padding: .5em;
+  background: url(img/blackMask.png) 100% 100% no-repeat;
+  color: #ececec;
+  font-family: 'Sans Open', sans-serif;
+  font-weight: 700;
+  padding-right: 20px;
+}
+
+
+
+/* Section Carousel and Login */
+.section-carouslog {
+  margin-top: 13px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+/* Login */
+.login {
+  position: relative;
+  border-radius: 4px;
+  width: 271px;
+}
+
+.login .login__background {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+.login .login__title {
+  position: absolute;
+  top: 16px;
+  width: 100%;
+  font-weight: 600;
+  text-align: center;
+  text-transform: uppercase;
+  color: #ececec;
+}
+
+.login .login__title img {
+  vertical-align: bottom;
+}
+
+.login .user__name,
+.login .password {
+  position: absolute;
+  height: 25px;
+  padding-left: 16px;
+  color: #333;
+  background: linear-gradient(to bottom, #bdbdbd, #e4e7e7, #ffffff);
+  border: none;
+}
+
+.login .user__name:focus,
+.login .password:focus {
+  outline: none;
+}
+
+.login .user__name {
+  top: 55px;
+}
+
+.login .password {
+  top: 92px;
+}
+
+.log__input::-webkit-input-placeholder {
+  color: #a5a6a6;
+}
+
+.log__input::-moz-placeholder {
+  color: #a5a6a6;
+}
+
+.login .login__checkrow {
+  position: absolute;
+  top: 130px;
+  width: 100%;
+  text-align: center;
+  color: #e4e7e7;
+}
+
+.login .login__checkrow .login__check {
+  vertical-align: baseline;
+}
+
+.login__loginbtn {
+  left: 89px;
+  position: absolute;
+  top: 178px;
+  background: linear-gradient(to top, #a21b11, #c24c3b);
+  border: none;
+  width: 85px;
+  height: 34px;
+  border-radius: 3px;
+  color: #ececec;
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.login__loginbtn:hover {
+  cursor: pointer;
+}
+
+.login__memberrow {
+  position: absolute;
+  top: 230px;
+  text-align: center;
+  width: 100%;
+  color: #ebebeb;
+  font-size: 20px;
+}
+
+.login__openaccbtn {
+  width: 185px;
+  height: 34px;
+  position: absolute;
+  bottom: 15px;
+  background: linear-gradient(to top, #a21b11, #c24c3b);
+  color: #ececec;
+  font-size: 18px;
+  font-weight: 500;
+  border-radius: 3px;
+  border: none;
+}
+
+.login__openaccbtn:hover {
+  cursor: pointer;
+}
+
+/* Carousel */
+.carousel {
+  max-width: 675px;
+  position: relative;
+}
+
+.carousel .carousel__item {
+  max-width: 100%;
+  height: auto;
+  border-radius: 4px;
+  display: block;
+  position: relative;
+}
+
+.fade {
+  -webkit-animation-name: fade;
+  -webkit-animation-duration: 1.5s;
+  animation-name: fade;
+  animation-duration: 1.5s;
+}
+
+@-webkit-keyframes fade {
+  from {
+    opacity: .4
+  }
+
+  to {
+    opacity: 1
+  }
+}
+
+@keyframes fade {
+  from {
+    opacity: .4
+  }
+
+  to {
+    opacity: 1
+  }
+}
+
+.carousel .carousel__dotsblock {
+  display: flex;
+  position: absolute;
+  width: 48px;
+  height: 16px;
+  bottom: 16px;
+  right: 34px;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.carousel .carousel__dot {
+  border-radius: 50%;
+  width: 7px;
+  height: 7px;
+  background-color: #e8e9e8;
+  cursor: pointer;
+}
+
+.carousel .carousel__dotborder.active {
+  padding: 2px;
+  border: 2px solid #d19a94;
+  box-shadow: 0 0 2px #d19a94;
+  border-radius: 50%;
+}
+
+
+
+/* Section info special and how */
+.section-info {
+  margin-top: 23px;
+  padding-bottom: 30px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.title {
+  font-size: 22px;
+  font-weight: 600;
+  color: #595959;
+}
+
+.section-info .text__red {
+  color: #e24335;
+}
+
+.check__block {
+  color: #8b8888;
+  margin-top: 27px;
+}
+
+.check__block li {
+  padding-bottom: 8px;
+}
+
+.check__block li:last-child {
+  padding-bottom: 0px;
+}
+
+.info__how img {
+  margin-top: 19px;
+  max-width: 100%;
+  height: auto;
+}
+
+
+
+/* Footer */
+
+.footer {
+  color: #ebe8e8;
+  background-color: #1f1f1f;
+  height: 62px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.footer span:first-child {
+  text-transform: uppercase;
+  font-size: 28px;
+  margin-left: 35px;
+}
+
+.footer span:last-child {
+  font-size: 16px;
+  margin-right: 35px;
+}

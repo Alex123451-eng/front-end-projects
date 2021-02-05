@@ -1,0 +1,289 @@
+@media (max-width: 1220px) {
+
+  /* header */
+
+  .glass img {
+    display: none;
+  }
+
+  /* about us */
+
+  .slider {
+    /* slider */
+    margin: 0 auto;
+    margin-bottom: 100px;
+    width: 80%;
+  }
+
+  .slider__horizontalblock {
+    width: 100%;
+  }
+
+  .info {
+    display: block;
+    margin: 0 auto;
+    width: 80%;
+  }
+
+  .wrapperThoughtsButtons {
+    margin: 0 auto;
+    width: 80%;
+  }
+
+  /* gallery3 */
+
+  .gallery3__item--message__text {
+    line-height: 22px;
+  }
+
+  .gallery3__item--message::before {
+    /* triangle */
+    border: 10px solid transparent;
+    border-bottom: 22px solid #6ff6eb;
+    top: -25px;
+  }
+
+  /* brands */
+
+  .brands {
+    display: none;
+  }
+
+  /* connect */
+
+  .connect::before {
+    display: none;
+  }
+
+  .connect__background {
+    display: none;
+  }
+
+  .connect__send,
+  .connect__location {
+    display: block;
+    margin: 0 auto;
+  }
+
+  .connect {
+    margin: 5% 0 5%;
+  }
+
+  .connect__content {
+    position: static;
+    transform: translate(0%, 0%);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    width: 80%;
+    margin: 0 auto;
+  }
+
+  .connect__send {
+    display: block;
+    margin-bottom: 7%;
+    width: 80%;
+  }
+
+  .connect__location {
+    width: 80%;
+  }
+
+  .content__address--item {
+    font-size: calc(14px + (6 + 6 * 0.35555) * ((100vw - 320px) / 1220));
+  }
+
+  .connect__name::placeholder,
+  .connect__subject::placeholder,
+  .connect__email::placeholder,
+  .connect__message::placeholder {
+    font-size: calc(14px + (6 + 6 * 0.35555) * ((100vw - 320px) / 1220));
+  }
+}
+
+@media (max-width: 1100px) {
+
+  /* gallery 3 */
+
+  .gallery3__item--message__text {
+    line-height: 16px;
+  }
+
+  .gallery3__item--message__icons i {
+    font-size: 15px;
+  }
+}
+
+@media (max-width: 900px) {
+
+  /* gallery 3 */
+
+  .gallery3__item--message__text {
+    line-height: 13px;
+    padding-bottom: 8.5%;
+  }
+
+  .gallery3__item--message__icons i {
+    font-size: 12px;
+  }
+
+  .gallery3__item--message::before {
+    /* triangle */
+    top: -20px;
+  }
+}
+
+@media (max-width: 700px) {
+
+  /* header */
+
+  .header {
+    height: 500px;
+  }
+
+  .logo img {
+    padding: 4px 0;
+  }
+
+  .header__button {
+    padding: 9px 23px;
+  }
+
+  /* about us */
+
+  .slider {
+    height: 60vw;
+  }
+
+  .slider.second {
+    height: 60vw;
+  }
+
+  .slider__buttons {
+    bottom: -50px;
+  }
+
+  .slider__buttons--item {
+    width: 8px;
+    height: 8px;
+    border-radius: 2px;
+  }
+
+  /* gallery2 */
+
+  .gallery2 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 90%;
+  }
+
+  .gallery2__item {
+    max-width: 474px;
+  }
+
+  .gallery2__item--active__message,
+  .gallery2__item--default__message {
+    font-size: calc(12px + (7 + 7 * 1.21) * ((100vw - 320px) / 700));
+  }
+
+  .gallery2__item--default__message {
+    padding-top: 9%;
+  }
+
+  .gallery2__item--default__more {
+    margin-top: 20%;
+  }
+
+  .gallery2__item.gallery2__item--3 .gallery2__item--default__more {
+    margin-top: 10%;
+  }
+
+  .gallery2__item.gallery2__item--6 .gallery2__item--default__more {
+    margin-top: 10%;
+  }
+
+  /* gallery3 */
+
+  .gallery3 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .gallery3__item--message__name {
+    font-size: 20px;
+  }
+
+  .gallery3__item--message__job {
+    font-size: 15px;
+  }
+
+  .gallery3__item--message__text {
+    line-height: 20px;
+  }
+
+  .gallery3__item--message::before {
+    /* triangle */
+    top: -30px;
+    border: 15px solid transparent;
+    border-bottom: 29px solid #6ff6eb;
+  }
+
+  .gallery3__item--message__text {
+    padding-bottom: 25%;
+    font-size: calc(12px + (7 + 7 * 1.21) * ((100vw - 320px) / 700));
+  }
+
+  .gallery3__item--message__icons i {
+    font-size: 20px;
+  }
+
+  .thoughts__name {
+    font-size: 20px;
+  }
+
+  .thoughts__job {
+    display: block;
+    line-height: 25px;
+    font-size: 15px;
+  }
+
+  .buttons__item {
+    width: 40px;
+    height: 40px;
+  }
+
+  .buttons__item.left::before,
+  .buttons__item.right::after {
+    width: 15px;
+    height: 15px;
+    border-top: 4px solid #25514d;
+    border-right: 4px solid #25514d;
+  }
+
+  /* footer */
+
+  .footer {
+    height: 150px;
+  }
+
+  .ibackground {
+    width: 30px;
+    height: 30px;
+  }
+}
+
+
+@media (max-width: 370px) {
+
+  /* gallery3 */
+
+  .gallery3__item--message__text {
+    padding-bottom: 8.5%;
+  }
+
+  .gallery3__item--message__icons i {
+    font-size: 15px;
+  }
+}
