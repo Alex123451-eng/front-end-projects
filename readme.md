@@ -5,6 +5,9 @@
 3. notebook is a simple app aimed at storing some data in the localStorage.
 4. BusinessSite is an old fashioned, but minimalistic one-page site.
 5.reactAppTable is a project built on React library. The functionality is as follows:
- + a
- + a
-6. dd
+ + Download: You can download two datasets (small and big) from a server and then app displays the table with preferred data.
+ + Sorting: You can sort each of table's columns in ascending and descending order.
+ + Filter: You can search for particular results in the table by using the filter input.
+ + Pagination: You can look through the data using navigation buttons. Each page displays 50 items.
+ + Adding: You can add your own data to the set by clicking on the 'Добавить' button and filling the required inputs.
+ + Validation: All the forms are validated. 
