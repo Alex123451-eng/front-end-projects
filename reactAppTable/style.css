@@ -1,0 +1,209 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  /* max font size 16px, min 10px */
+  font-size: calc(10px + (6 + 6 * 0.33333) * ((100vw - 320px) / 1280));
+  font-family: 'Times New Roman', serif;
+}
+
+.startMessage,
+.errorMessage,
+.loadMessage {
+  text-align: center;
+  margin-top: 25px;
+}
+
+.btnsCover,
+.addContainer {
+  display: flex;
+  justify-content: center;
+  margin: 10px auto 0;
+  max-width: 700px;
+}
+
+.loadBtn,
+.addNewRowBtn,
+.addNewRowBtnValidated {
+  font-size: calc(10px + (4 + 4 * 0.33333) * ((100vw - 320px) / 1280));
+  font-family: 'Times New Roman', serif;
+  margin-left: 10px;
+  border: 0;
+  width: 150px;
+  padding: 0 15px;
+  height: 40px;
+  color: #fff;
+  background-color: #000;
+  border-radius: 15px;
+}
+
+.loadBtn:first-child,
+.addNewRowBtn:first-child,
+.addNewRowBtnValidated:first-child {
+  margin-left: 0;
+}
+
+.loadBtn:hover,
+.addNewRowBtn:hover,
+.addNewRowBtnValidated:hover {
+  cursor: pointer;
+}
+
+.loadBtn[disabled],
+.addNewRowBtnValidated[disabled] {
+  cursor: default;
+  color: #D5D5D5;
+  background-color: #808080;
+}
+
+.loadBtn:focus,
+.addNewRowBtn:focus {
+  outline: none;
+}
+
+.addFormContainer {
+  max-width: 700px;
+  margin: 10px auto 0;
+}
+
+.addForm {
+  border: 1px solid #000;
+  border-right: 0;
+  height: 27px;
+  width: 20%;
+}
+
+.addForm:last-child {
+  border: 1px solid #000;
+}
+
+.addForm::placeholder {
+  padding-left: 5px;
+}
+
+.addForm:focus {
+  outline: none;
+}
+
+.searchContainer {
+  max-width: 700px;
+  display: flex;
+  margin: 50px auto 0;
+}
+
+.searchBtn {
+  font-size: calc(10px + (4 + 4 * 0.33333) * ((100vw - 320px) / 1280));
+  font-family: 'Times New Roman', serif;
+  border: 0;
+  width: 100px;
+  padding: 0 15px;
+  height: 40px;
+  color: #fff;
+  background-color: #000;
+}
+
+.searchBtn:hover {
+  cursor: pointer;
+}
+
+.searchInput {
+  width: 100%;
+}
+
+.searchInput:focus {
+  outline: none;
+}
+
+.contentTable {
+  letter-spacing: 1px;
+  margin: 0 auto 10px;
+  width: 700px;
+  border-collapse: collapse;
+  border: 2px dashed #000;
+  border-top: 0;
+}
+
+td,
+th {
+  padding: 5px 10px;
+  width: 20%;
+  border: 1px dashed #000;
+}
+
+th {
+  border-top: 0;
+}
+
+.idCell {
+  width: 60px;
+}
+
+.navContainer {
+  max-width: 700px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+.nav {
+  border: 0;
+  margin-left: 10px;
+  width: 100px;
+  padding: 0 15px;
+  height: 40px;
+  color: #fff;
+  background-color: #000;
+  border-radius: 15px;
+}
+
+.nav:first-child {
+  margin-left: 0;
+}
+
+.nav:focus {
+  outline: none;
+}
+
+.nav:hover {
+  cursor: pointer
+}
+
+.nav[disabled] {
+  cursor: default;
+  color: #D5D5D5;
+  background-color: #808080;
+}
+
+.row:hover {
+  cursor: pointer;
+  background-color: #E5F8FB;
+}
+
+.rowInfo {
+  max-width: 700px;
+  padding: 10px;
+  margin: 0 auto;
+  background-color: #F6F8FA;
+  margin-bottom: 50px;
+}
+
+.rowInfo__textarea {
+  width: 100%;
+  height: 50px;
+  overflow: hidden;
+  resize: none;
+}
+
+.rowInfo__textarea:focus {
+  outline: none;
+}
+
+.sortMessage {
+  font-weight: 300;
+  margin-left: 5px;
+  font-style: italic;
+  display: inline;
+}
