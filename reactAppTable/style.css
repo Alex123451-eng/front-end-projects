@@ -59,7 +59,8 @@ body {
 }
 
 .loadBtn:focus,
-.addNewRowBtn:focus {
+.addNewRowBtn:focus,
+.addNewRowBtnValidated:focus {
   outline: none;
 }
 
@@ -192,7 +193,7 @@ th {
 
 .rowInfo__textarea {
   width: 100%;
-  height: 50px;
+  height: 60px;
   overflow: hidden;
   resize: none;
 }
