@@ -6,6 +6,7 @@
 4. BusinessSite is an old fashioned, but still a nice looking one-page site.
 5. reactAppTable is a project built on React library. The functionality is as follows:
  + Download: You can download two datasets (small and big) from a server and then app displays the table with preferred data.
+ + Detailed info: You can click any row of the table and full information of an item is going to apper at the bottom
  + Sorting: You can sort each of table's columns in ascending and descending order.
  + Filter: You can search for particular results in the table by using the filter input.
  + Pagination: You can look through the data using navigation buttons. Each page displays 50 items.
