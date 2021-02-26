@@ -1,0 +1,24 @@
+@media (max-width: 650px) {
+
+  .toDoItemContainer div:first-child {
+    width: 80%;
+  }
+}
+
+@media (max-width: 500px) {
+
+  .inputAddBtnContainer {
+    display: block;
+  }
+
+  .input {
+    width: 100%;
+  }
+
+  .addBtn {
+    display: block;
+    width: 100%;
+    margin-left: 0;
+    margin-top: 15px;
+  }
+}
