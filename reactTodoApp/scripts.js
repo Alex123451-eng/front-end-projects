@@ -5,7 +5,7 @@ class App extends React.Component {
     super(props);
 
     this.state = {
-      todos: [
+      todos: JSON.parse(localStorage.getItem("storedTodos")) || [
         {
           id: 1,
           itemValue: 'Learn React',
@@ -44,6 +44,9 @@ class App extends React.Component {
     }
 
     todos.unshift({ id: Math.random(), itemValue: inputValue, isCompleted: false });
+    
+    const serializedTodos = JSON.stringify(todos);
+    localStorage.setItem("storedTodos", serializedTodos)
 
     this.setState({ todos, inputValue: '' });
   }
@@ -62,6 +65,9 @@ class App extends React.Component {
       return item;
     });
 
+    const serializedTodos = JSON.stringify(newTodos);
+    localStorage.setItem("storedTodos", serializedTodos);
+
     this.setState({ todos: newTodos });
   }
 
@@ -70,7 +76,12 @@ class App extends React.Component {
 
     todos.splice(neededIndex, 1);
 
-    this.setState({ todos })
+    const serializedTodos = JSON.stringify(todos);
+    localStorage.setItem("storedTodos", serializedTodos);
+
+    if (!todos.length) localStorage.clear();
+
+    this.setState({ todos });
   }
 
   handleDisplayedData(direction) {
@@ -145,7 +156,7 @@ class App extends React.Component {
                     onCheck={this.CheckHandle}
                     onBucketClick={this.bucketClickHandle}
                     isCompleted={item.isCompleted}
-                    index={index}
+                    index={startTodoOnPage + index}
                   />
                 );
               })
