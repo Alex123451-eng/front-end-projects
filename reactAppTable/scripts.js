@@ -416,7 +416,7 @@ function Help() {
     <div className="helpBlock">
       <p className="helpBlockTitle"><span className="boldText">help</span></p>
       <div><span className="boldText">This is how fields should be filled:</span></div>
-      <p><span className="boldText"> ID:</span> 3-4 digits</p>
+      <p><span className="boldText"> ID:</span> 1-4 digits</p>
       <p><span className="boldText"> First Name:</span> first letter is capital, then whatever is necessary except gaps</p>
       <p><span className="boldText"> Last Name:</span> first letter is capital, then whatever is necessary except gaps</p>
       <p><span className="boldText"> Email:</span> standard email mask</p>
