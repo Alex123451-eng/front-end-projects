@@ -1,9 +1,5 @@
 /* General */
 
-body {
-  margin: 0;
-}
-
 * {
   box-sizing: border-box;
 }
@@ -18,8 +14,8 @@ button {
   border: 0;
   cursor: pointer;
   font-family: "Times New Roman", serif;
-  font-size: 14px;
-  height: 40px;
+  font-size: 16px;
+  height: 43px;
 }
 
 button:focus {
@@ -105,7 +101,7 @@ button:disabled {
   width: 20%;
   border: 1px solid #000;
   border-right: 0;
-  font-size: 14px;
+  font-size: 16px;
 }
 
 .descInputBlock .inputField {
