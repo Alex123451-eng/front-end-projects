@@ -6,7 +6,7 @@
  + Sorting: You can sort each of table's columns in ascending and descending order.
  + Filter: You can search for particular results in the table by using the filter input.
  + Pagination: You can look through the data using navigation buttons. Each page displays 50 items.
- + Adding: You can add your own data to the set by clicking on the 'Добавить' button and filling the required inputs.
+ + Adding: You can add your own data to the set by clicking on the 'Add' button and filling the required inputs.
  + Validation: All the forms are validated. 
 2. React Todo App is a simple App where you can create your todos, mark them as completed and then delete. All of todos are going to be stored in your browser data storage. In case there are too many todos, they will be separated onto different pages.
 3. agencyLanding is just a common, but beatiful template created with HTML5, CSS3 and a little bit of JS.
