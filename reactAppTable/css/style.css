@@ -15,7 +15,7 @@ button {
   cursor: pointer;
   font-family: "Times New Roman", serif;
   font-size: 16px;
-  height: 43px;
+  height: 44px;
 }
 
 button:focus {
@@ -101,7 +101,8 @@ button:disabled {
   width: 20%;
   border: 1px solid #000;
   border-right: 0;
-  font-size: 16px;
+  font-size: 14px;
+  height: 22px;
 }
 
 .descInputBlock .inputField {
@@ -133,7 +134,7 @@ button:disabled {
 .searchInput {
   width: 100%;
   font-size: 16px;
-  height: 43px;
+  height: 44px;
 }
 
 .searchInput:focus {
@@ -142,7 +143,7 @@ button:disabled {
 
 .searchInput::placeholder {
   padding-left: 5px;
-  font-size: 14px;
+  font-size: 16px;
 }
 
 /* ------------------------- searchContainer end */
