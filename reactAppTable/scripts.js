@@ -1,401 +1,277 @@
 'use strict'
 
 class App extends React.Component {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
     this.state = {
-      isSmallDataLoading: false,
-      isBigDataLoading: false
-    };
-    this.handleData = this.handleData.bind(this);
-  }
-
-  handleData(data) {
-    if (data === 'isPushedSmallData') {
-      this.setState({
-        isSmallDataLoading: true,
-        isBigDataLoading: false
-      });
-    }
-    else if (data === 'isPushedBigData') {
-      this.setState({
-        isSmallDataLoading: false,
-        isBigDataLoading: true
-      });
-    }
-  }
-
-  render() {
-    const { isSmallDataLoading, isBigDataLoading } = this.state;
-    let output, link;
-    if (isSmallDataLoading) {
-      link = 'http://www.filltext.com/?rows=32&id={number|1000}&firstName={firstName}&lastName={lastName}&email={email}&phone={phone|(xxx)xxx-xx-xx}&address={addressObject}&description={lorem|32}';
-      output = 
-      <Table
-        key='a'
-        data={link}
-      />;
-    } else if (isBigDataLoading) {
-      link = 'http://www.filltext.com/?rows=1000&id={number|1000}&firstName={firstName}&delay=3&lastName={lastName}&email={email}&phone={phone|(xxx)xxx-xx-xx}&address={addressObject}&description={lorem|32}';
-      output = 
-      <Table 
-        key='b'
-        data={link}
-      />;
-    } else {
-      output = <p className='startMessage'>Вы еще не загрузили никаких данных</p>
-    }
-
-    return (
-      <div className='mainContainer'>
-        <ButtonsLoad
-          onClick={this.handleData}
-        />
-        {output}
-      </div>
-    )
-  }
-}
-
-class ButtonsLoad extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isPushedSmallData: false,
-      isPushedBigData: false
-    };
-    this.handleData = this.handleData.bind(this);
-  }
-
-  handleData(e) {
-    let id = e.target.id;
-
-    if (id === 'isPushedSmallData')
-      this.setState({
-        [id]: true,
-        isPushedBigData: false
-      });
-    else {
-      this.setState({
-        [id]: true,
-        isPushedSmallData: false
-      });
-    }
-
-    this.props.onClick(e.target.id);
-  }
-
-  render() {
-    const { isPushedSmallData, isPushedBigData } = this.state;
-    return (
-      <div className='btnsCover'>
-        <button
-          id='isPushedSmallData'
-          onClick={this.handleData}
-          className='loadBtn'
-          disabled={isPushedSmallData}
-          >
-          Скачать маленький объем данных
-        </button>
-
-        <button
-          id='isPushedBigData'
-          onClick={this.handleData}
-          className='loadBtn'
-          disabled={isPushedBigData}
-          >
-          Скачать большой объем данных
-        </button>
-      </div>
-    )
-  }
-}
-
-class Row extends React.Component {
-  constructor(props) {
-    super(props);
-    this.disp = this.disp.bind(this);
-  }
-
-  disp() {
-    let { firstName, lastName, address, description } = this.props.data;
-    this.props.onRowClicked({ firstName, lastName, address, description })
-  }
-
-  render() {
-    const item = this.props.data;
-
-    return (
-      <React.Fragment>
-      <tr className='row' onClick={this.disp}>
-        <td className='idCell'>{item.id}</td>
-        <td>{item.firstName}</td>
-        <td>{item.lastName}</td>
-        <td>{item.email}</td>
-        <td>{item.phone}</td>
-      </tr>
-      </React.Fragment>
-
-    )
-  }
-}
-
-class Table extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      error: null,
       isLoaded: false,
-      items: [],
-      isFullInfoRendering: false,
-      fullInfo: {
-        firstName: '',
-        lastname: '',
-        address: '',
-        description: ''
-      },
-      startDispItem: 0,
-      sortOrder: '',
-      sortedField: '',
-      dataToSearch: ''
+      isLoadBtnClicked: false,
+      error: null,
+      data: [],
+      itemToShow: {},
+      isItemShown: false,
+      firstUserOnPage: 0,
+      dataToSearch: "",
+      sortOrder: "upDown"
     };
-    this.handleFullInfo = this.handleFullInfo.bind(this);
-    this.handleDisplayedData = this.handleDisplayedData.bind(this);
+
+    this.downLoadData = this.downLoadData.bind(this);
+    this.handleAddToTable = this.handleAddToTable.bind(this);
+    this.searchHandle = this.searchHandle.bind(this);
+    this.getFilteredItems = this.getFilteredItems.bind(this);
     this.sort = this.sort.bind(this);
-    this.searchHandler = this.searchHandler.bind(this);
-    this.receiveFilteredItems = this.receiveFilteredItems.bind(this);
-    this.addToTable = this.addToTable.bind(this);
+    this.onRowClickHandle = this.onRowClickHandle.bind(this);
+    this.handlePagesDisp = this.handlePagesDisp.bind(this);
   }
 
-  handleFullInfo(data) {
-    this.setState({
-      isFullInfoRendering: true,
-      fullInfo: {
-        firstName: data.firstName,
-        lastname: data.lastName,
-        address: data.address,
-        description: data.description
-      }
-    });
-  }
+  downLoadData(url) {
+    this.setState({ isLoadBtnClicked: true });
 
-  handleDisplayedData(data) {
-    if (data === 'back') {
-      this.setState(prevState => ({ startDispItem: prevState.startDispItem - 50 }));
-    } else {
-      this.setState(prevState => ({ startDispItem: prevState.startDispItem + 50 }));
-    }
-  }
-
-  sort(field) {
-    let cloneItems = this.state.items.slice();
-
-    let sortOrder = this.state.sortOrder === 'downUp' ? 'upDown' : 'downUp';
-
-    let orderedItems;
-
-    if (sortOrder === 'downUp') {
-      orderedItems = cloneItems.sort((a, b) => a[field] > b[field] ? 1 : -1);
-    } else {
-      orderedItems = cloneItems.sort((a, b) => b[field] > a[field] ? 1 : -1);
-    }
-
-    this.setState({
-      items: orderedItems,
-      sortOrder: sortOrder,
-      sortedField: field
-    });
-  }
-  
-  componentDidMount() {    
-    const url = this.props.data;
     fetch(url)
-    .then(response => response.json())
-    .then(
-      result => {
-        this.setState({
-          isLoaded: true,
-          items: result
-        });
-      },
-      error => {
-        this.setState({
-          isLoaded: true,
-          error: error
-        });
-      }
-    )
+      .then(response => response.json())
+      .then(
+        data => {
+          this.setState({ data, isLoaded: true });
+        },
+        error => {
+          this.setState({ error, isLoaded: true });
+        }
+      );
   }
 
-  searchHandler(data) {
-    this.setState({ dataToSearch: data });
+  handleAddToTable(obj) {
+    const { data } = this.state;
 
-    if (data) this.setState({ startDispItem: 0 });
+    data.unshift(obj);
+
+    this.setState({ data });
   }
 
-  receiveFilteredItems() {
-    let {items, dataToSearch} = this.state;
+  searchHandle(dataToSearch) {
+    this.setState({ dataToSearch });
 
-    if (!dataToSearch) return items;
+    if (dataToSearch) this.setState({ firstUserOnPage: 0 });
+  }
 
-    let result = items.filter(item => {
+  getFilteredItems() {
+    const {data, dataToSearch} = this.state;
+
+    if (!dataToSearch) return data;
+
+    const result = data.filter(item => {
       return (
-        item['firstName'].toLowerCase().includes(dataToSearch.toLowerCase()) ||
-        item['lastName'].toLowerCase().includes(dataToSearch.toLowerCase()) ||
-        item['email'].toLowerCase().includes(dataToSearch.toLowerCase()) ||
-        item['phone'].toLowerCase().includes(dataToSearch.toLowerCase())
-      )
+        item["firstName"].toLowerCase().includes(dataToSearch.toLowerCase()) ||
+        item["lastName"].toLowerCase().includes(dataToSearch.toLowerCase()) ||
+        item["email"].toLowerCase().includes(dataToSearch.toLowerCase()) ||
+        item["phone"].includes(dataToSearch)
+      );
     });
-    if (!result.length) result = [];
 
     return result;
   }
 
-  addToTable(data) {
-    let items = this.state.items;
-    items.unshift(data);
+  sort(columnName) {
+    const { data } = this.state;
+
+    const sortOrder = this.state.sortOrder === "downUp" ? "upDown" : "downUp";
+
+    if (sortOrder === "downUp") {
+      data.sort((a, b) => a[columnName] > b[columnName] ? 1 : -1);
+    } else {
+      data.sort((a, b) => b[columnName] > a[columnName] ? 1 : -1);
+    }
+
     this.setState({
-      items: items
+      data,
+      sortOrder
     });
   }
-  
-  render() {
-    const { error, isLoaded, isFullInfoRendering, startDispItem, sortedField, sortOrder } = this.state;
-    let isNavDisabled = false;
-    
-    const filteredItems = this.receiveFilteredItems();
-    const itemsForDisp = filteredItems.slice(startDispItem, startDispItem + 50);
-    const isLeftBtnNavDisabled = startDispItem === 0 ? true : false;
-    const isRightBtnNavDisabled = startDispItem + 50 >= filteredItems.length ? true : false;
-    if (this.state.items <= 50) isNavDisabled = true;
-    if (error) {
-      return <p className='errorMessage'> Ошибка {error.message} </p>
-    } else if (!isLoaded) {
-      return <p className='loadMessage'> Загрузка... </p>
-    } else {
-      let fullInfo = null;
-      if (isFullInfoRendering) {
-        fullInfo = 
-          <div className='rowInfo'>
-              Выбран пользователь <b>{this.state.fullInfo.firstName} {this.state.fullInfo.lastname}</b> 
-              <br />
-              Описание: 
-              <br />
-              <textarea className='rowInfo__textarea' readOnly value={this.state.fullInfo.description}></textarea>
-              Адрес проживания: <b>{this.state.fullInfo.address.streetAddress}</b>
-              <br />
-              Город: <b>{this.state.fullInfo.address.city}</b>
-              <br />
-              Штат: <b>{this.state.fullInfo.address.state}</b>
-              <br />
-              Индекс: <b>{this.state.fullInfo.address.zip}</b>
-          </div>
-      }
 
+  onRowClickHandle(obj) {
+    this.setState({
+      itemToShow: obj,
+      isItemShown: true
+    });
+  }
+
+  handlePagesDisp(direct) {
+    if (direct === "back") {
+      this.setState(prevState => {
+        return { firstUserOnPage: prevState.firstUserOnPage - 50 };
+      });
+    } else {
+      this.setState(prevState => {
+        return { firstUserOnPage: prevState.firstUserOnPage + 50 };
+      });
+    }
+  }
+
+  render() {
+    const { isLoaded, itemToShow, isItemShown, error, isLoadBtnClicked, firstUserOnPage } = this.state;
+    const urlSmallData = "http://www.filltext.com/?rows=32&id={number|1000}&firstName={firstName}&lastName={lastName}&email={email}&phone={phone|(xxx)xxx-xx-xx}&address={addressObject}&description={lorem|32}";
+    const urlBigData = "http://www.filltext.com/?rows=1000&id={number|1000}&firstName={firstName}&delay=3&lastName={lastName}&email={email}&phone={phone|(xxx)xxx-xx-xx}&address={addressObject}&description={lorem|32}";
+
+    const data = this.getFilteredItems();
+
+    let isBackDisabled = false;
+    let isForwardDisabled = false;
+
+    if (data.length <= 50) {
+      isBackDisabled = true;
+      isForwardDisabled = true;
+    }
+
+    if (firstUserOnPage === 0) {
+      isBackDisabled = true;
+    }
+
+    if (firstUserOnPage + 50 >= data.length) {
+      isForwardDisabled = true;
+    }
+
+    if (!isLoadBtnClicked) {
       return (
-        <React.Fragment>
-          <AddPanel onAddToTable={this.addToTable} />
-          <SearchPanel onSearch={this.searchHandler} />
-          <table className='contentTable'>
-            <thead>
-            <tr>
-              <th onClick={this.sort.bind(null, 'id')}
-                className='idCell'>
-                id
-                {sortedField === 'id' ? <p className='sortMessage'>{sortOrder}</p> : null}
-              </th>
-              <th onClick={this.sort.bind(null, 'firstName')}>
-                firstName
-                {sortedField === 'firstName' ? <p className='sortMessage'>{sortOrder}</p> : null}
-              </th>
-              <th onClick={this.sort.bind(null, 'lastName')}>
-                lastName
-                {sortedField === 'lastName' ? <p className='sortMessage'>{sortOrder}</p> : null}
-              </th>
-              <th onClick={this.sort.bind(null, 'email')}>
-                email
-                {sortedField === 'email' ? <p className='sortMessage'>{sortOrder}</p> : null}
-              </th>
-              <th onClick={this.sort.bind(null, 'phone')}>
-                phone
-                {sortedField === 'phone' ? <p className='sortMessage'>{sortOrder}</p> : null}
-              </th>
-            </tr>
-            </thead>
-            <tbody>
-              {
-                itemsForDisp.map(item => (
-                  <Row onRowClicked={this.handleFullInfo} key={item.description} data={item} />
-                ))
-              }
-            </tbody>
-          </table>
-          <ButtonsNav
-            onNavClick={this.handleDisplayedData}
-            isLeftBtnNavDisabled={isLeftBtnNavDisabled}
-            isRightBtnNavDisabled={isRightBtnNavDisabled}
-            isNavDisabled={isNavDisabled}
+        <div className="appContainer">
+          <BtnsBlock 
+            firstBtnTxt="Download small data"
+            secondBtnTxt="Download big data"
+            firstBtnData={urlSmallData}
+            secondBtnData={urlBigData}
+            handleAction={this.downLoadData}
           />
-          {fullInfo}
-        </React.Fragment>
-      )
+        </div>
+      );
+    } else if (error) {
+      return <p>Error {error.message}</p>;
+    } else if (!isLoaded) {
+      return <img className="spiner" src="imgs/spiner.svg" alt="preloader" />;
+    } else {
+      return (
+        <div className="appContainer">
+          <Help />
+
+          <AddContainer handleAddToTable={this.handleAddToTable} />
+
+          <SearchContainer searchHandle={this.searchHandle} />
+          <Table
+            data={data}
+            firstUserOnPage={firstUserOnPage}
+            onRowClickHandle={this.onRowClickHandle}
+            sort={this.sort}
+          />
+
+          <BtnsBlock
+            firstBtnTxt="Back"
+            secondBtnTxt="Forward"
+            firstBtnData="back"
+            secondBtnData="forward"
+            handleAction={this.handlePagesDisp}
+            isFirstBtnDisabled={isBackDisabled}
+            isSecondBtnDisabled={isForwardDisabled}
+          />
+
+          {isItemShown ? <Description itemToShow={itemToShow} /> : null}
+        </div>
+      );
     }
   }
 }
 
-class AddPanel extends React.Component {
-  constructor(props) {
-    super(props);
+function BtnsBlock(props) {
+  const { firstBtnTxt, secondBtnTxt, firstBtnData, secondBtnData, isFirstBtnDisabled, isSecondBtnDisabled } = props;
+
+  return (
+    <div className="btnsBlock">
+      <button
+        disabled={isFirstBtnDisabled}
+        onClick={() => props.handleAction(firstBtnData)} 
+        className="btns"
+      >
+        {firstBtnTxt}
+      </button>
+
+      <button
+        disabled={isSecondBtnDisabled}
+        onClick={() => props.handleAction(secondBtnData)} 
+        className="btns"
+      >
+        {secondBtnTxt}
+      </button>
+    </div>
+  );
+}
+
+class AddContainer extends React.Component {
+  constructor() {
+    super();
     this.state = {
-      isValidatedBtnDisabled: true,
-      showAddForm: false,
-      id: '',
-      firstName: '',
-      lastName: '',
-      email: '',
-      phone: '',
-      isIdValid: false,
-      isFirstNameValid: false,
-      isLastNameValid: false,
-      isEmailValid: false,
-      isPhoneValid: false
-    }
-    this.showAddFormHandle = this.showAddFormHandle.bind(this);
-    this.handleUserInput = this.handleUserInput.bind(this);
+      id: "",
+      firstName: "",
+      lastName: "",
+      email: "",
+      phone: "",
+      streetAddress: "",
+      city: "",
+      state: "",
+      zip: "",
+      description: "",
+      isAddBtnDisabled: true,
+      isIdValid: "",
+      isFirstNameValid: "",
+      isLastNameValid: "",
+      isEmailValid: "",
+      isPhoneValid: "",
+      isStrAddrValid: "",
+      isCityValid: "",
+      isStateValid: "",
+      isZipValid: "",
+      isDescValid: ""
+    };
+
+    this.handleChange = this.handleChange.bind(this);
     this.validateFields = this.validateFields.bind(this);
-    this.onAddClick = this.onAddClick.bind(this);
   }
 
-  showAddFormHandle() {
-    this.setState({ showAddForm: true });
+  handleChange(e) {
+    const { name, value } = e.target;
+
+    this.setState({ [name]: value }, () => { this.validateFields(name, value) });
   }
 
-  handleUserInput(e) {
-    let id = e.target.id;
-    let value = e.target.value;
-
-    this.setState({ [id]: value},
-      () => { this.validateFields(id, value) });
-  }
-
-  validateFields(fieldName, value) {
+  validateFields(name, value) {
     let { isIdValid, isFirstNameValid, isLastNameValid, isEmailValid, isPhoneValid } = this.state;
+    let { isStrAddrValid, isCityValid, isStateValid, isZipValid, isDescValid } = this.state;
 
-    switch(fieldName) {
-      case 'id':
+    switch(name) {
+      case "id":
         isIdValid = value.match(/^\d{1,4}$/);
         break;
-      case 'firstName':
+      case "firstName":
         isFirstNameValid = value.match(/^[A-Z]{1}[a-z]*$/)
         break;
-      case 'lastName':
+      case "lastName":
         isLastNameValid = value.match(/^[A-Z]{1}[a-z]*$/);
         break;
-      case 'email':
-        isEmailValid = value.match(/^[A-Z]{2}[a-z]+@[a-z]{2,}\.[a-z]{2,}$/);
+      case "email":
+        isEmailValid = value.match(/^\w+@[a-z]+\.[a-z]{2,}$/);
         break;
-      case 'phone':
+      case "phone":
         isPhoneValid = value.match(/^\(\d{3}\)\d{3}-\d{4}$/);
+        break;
+      case "streetAddress":
+        isStrAddrValid = value.match(/^[A-Za-z0-9]+[A-Za-z0-9 ]*$/);
+        break;
+      case "city":
+        isCityValid = value.match(/^[A-Z]{1}[A-Za-z ]*$/);
+        break;
+      case "state":
+        isStateValid = value.match(/^[A-Z]{2}$/);
+        break;
+      case "zip":
+        isZipValid = value.match(/^\d{5}$/);
+        break;
+      case "description":
+        isDescValid = value.match(/^[A-Za-z0-9]+[A-Za-z0-9 ]*$/);
         break;
       default:
         break;
@@ -406,154 +282,270 @@ class AddPanel extends React.Component {
       isFirstNameValid,
       isLastNameValid,
       isEmailValid,
-      isPhoneValid
-    })
+      isPhoneValid,
+      isStrAddrValid,
+      isCityValid,
+      isStateValid,
+      isZipValid,
+      isDescValid
+    });
 
-    if (isIdValid && isFirstNameValid && isLastNameValid && isEmailValid && isPhoneValid) {
-      this.setState({
-        isValidatedBtnDisabled: false
-      });
+    if (isIdValid && isFirstNameValid && isLastNameValid && isEmailValid && isPhoneValid &&
+      isStrAddrValid && isCityValid && isStateValid && isZipValid && isDescValid) {
+      this.setState({ isAddBtnDisabled: false });
     } else {
-      this.setState({
-        isValidatedBtnDisabled: true
-      });
+      this.setState({ isAddBtnDisabled: true });
     }
   }
 
-  onAddClick() {
-    let { id, firstName, lastName, email, phone } = this.state;
-    let address = {streetAddress: "5193 Amet Ct", city: "Midlothian", state: "MF", zip: "97386"};
-    let description = id + firstName + lastName + email + phone + Math.random();
-    id = +id;
-    this.props.onAddToTable({ id, firstName, lastName, email, phone, description, address });
-  }
-
   render() {
-    let { showAddForm, id, firstName, lastName, email, phone } = this.state;
-    let output = showAddForm === true ? 
-    <form className='addFormContainer'>
-      <input
-        id='id' 
-        value={id} 
-        onChange={this.handleUserInput} 
-        type='text' 
-        placeholder='id' 
-        className='addForm id' />
-      <input 
-        id='firstName' 
-        value={firstName} 
-        onChange={this.handleUserInput} 
-        type='text' 
-        placeholder='firstName' 
-        className='addForm firstName' />
-      <input 
-        id='lastName' 
-        value={lastName} 
-        onChange={this.handleUserInput} 
-        type='text' placeholder='lastName' 
-        className='addForm lastName' />
-      <input 
-        id='email' 
-        value={email} 
-        onChange={this.handleUserInput} 
-        type='text' 
-        placeholder='email' 
-        className='addForm email' />
-      <input 
-        id='phone' 
-        value={phone} 
-        onChange={this.handleUserInput} 
-        type='text' 
-        placeholder='phone' 
-        className='addForm phone' />
-    </form>
-    : null;
-
-    return (
-      <React.Fragment>
-        <div className='addContainer'>
-          <button onClick={this.showAddFormHandle} className='addNewRowBtn'>Добавить</button>
-          <button 
-            onClick={this.onAddClick}
-            className='addNewRowBtnValidated'
-            disabled={this.state.isValidatedBtnDisabled}>
-            Добавить в таблицу
-          </button>
-        </div>
-        {output}
-      </React.Fragment>
-    )
-  }
-}
-
-class SearchPanel extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      searchInputValue: ''
+    const {firstName, lastName, email, phone, isAddBtnDisabled, streetAddress, city, state, zip, description  } = this.state;
+    const id = +this.state.id;
+    const address = {
+      streetAddress,
+			city,
+			state,
+			zip
     };
-    this.handleSearchInpChange = this.handleSearchInpChange.bind(this);
-  }
 
-  handleSearchInpChange(e) {
-    this.setState({ searchInputValue: e.target.value });
-  }
-
-  render() {
-    const searchInputValue = this.state.searchInputValue;
     return (
-      <div className='searchContainer'>
+      <div className="addContainer">
         <button
-          onClick={() => this.props.onSearch(searchInputValue)} 
-          className='searchBtn'
+          disabled={isAddBtnDisabled}
+          onClick={() => this.props.handleAddToTable({ id, firstName, lastName, email, phone, address, description })}
+          className="addBtn"
         >
-           Найти
+          Add
         </button>
-        <input
-          type='text'
-          value={this.state.searchInputValue}
-          onChange={this.handleSearchInpChange}
-          className='searchInput' />
+
+        <div className="addInputBlock">
+          <div className="tableInputBlock">
+            <input
+              type="text"
+              placeholder="ID"
+              value={this.state.id}
+              className="inputField"
+              onChange={this.handleChange}
+              name="id"
+            /> 
+            <input
+              type="text"
+              placeholder="First Name"
+              value={this.state.firstName}
+              className="inputField"
+              onChange={this.handleChange}
+              name="firstName"
+            /> 
+            <input
+              type="text"
+              placeholder="Last Name"
+              value={this.state.lastName}
+              className="inputField"
+              onChange={this.handleChange}
+              name="lastName"
+            /> 
+            <input
+              type="text"
+              placeholder="Email"
+              value={this.state.email}
+              className="inputField"
+              onChange={this.handleChange}
+              name="email"
+            /> 
+            <input
+              type="text"
+              placeholder="Phone"
+              value={this.state.phone}
+              className="inputField"
+              onChange={this.handleChange}
+              name="phone"
+            />
+          </div>
+
+          <div className="descInputBlock">
+            <input
+              type="text"
+              placeholder="Street Address"
+              value={this.state.streetAddress}
+              className="inputField"
+              onChange={this.handleChange}
+              name="streetAddress"
+            /> 
+            <input
+              type="text"
+              placeholder="City"
+              value={this.state.city}
+              className="inputField"
+              onChange={this.handleChange}
+              name="city"
+            /> 
+            <input
+              type="text"
+              placeholder="State"
+              value={this.state.state}
+              className="inputField"
+              onChange={this.handleChange}
+              name="state"
+            /> 
+            <input
+              type="text"
+              placeholder="Zip"
+              value={this.state.zip}
+              className="inputField"
+              onChange={this.handleChange}
+              name="zip"
+            /> 
+            <input
+              type="text"
+              placeholder="Description"
+              value={this.state.description}
+              className="inputField"
+              onChange={this.handleChange}
+              name="description"
+            />
+          </div>
+        </div>
+
       </div>
-    )
+    );
   }
 }
 
-class ButtonsNav extends React.Component { 
-  constructor(props) {
-    super(props);
-    this.handleDisplayedData = this.handleDisplayedData.bind(this);
+function Help() {
+  return (
+    <div className="helpBlock">
+      <p className="helpBlockTitle"><span className="boldText">help</span></p>
+      <div><span className="boldText">This is how fields should be filled:</span></div>
+      <p><span className="boldText"> ID:</span> 3-4 digits</p>
+      <p><span className="boldText"> First Name:</span> first letter is capital, then whatever is necessary except gaps</p>
+      <p><span className="boldText"> Last Name:</span> first letter is capital, then whatever is necessary except gaps</p>
+      <p><span className="boldText"> Email:</span> standard email mask</p>
+      <p><span className="boldText"> Phone:</span> phone mask can be seen in the table</p>
+      <p><span className="boldText"> Street Address:</span> required address, first sign should not be a space</p>
+      <p><span className="boldText"> City:</span> first letter is capital, then whatever is necessary except gaps</p>
+      <p><span className="boldText"> State:</span> 2 capital letters</p>
+      <p><span className="boldText"> Zip:</span> 5 digits</p>
+      <div><span className="boldText">Description:</span> required description, first sign should not be a space</div>
+    </div>
+  );
+}
+
+class SearchContainer extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      searchInput: ""
+    };
+
+    this.handleSearchInput = this.handleSearchInput.bind(this);
   }
 
+  handleSearchInput(e) {
+    const { name, value } = e.target;
 
-  handleDisplayedData(e) {
-    let id = e.target.id;
-    this.props.onNavClick(id);
+    this.setState({ [name]: value }, () => { this.props.searchHandle(value) });
   }
 
   render() {
-    const { isNavDisabled, isLeftBtnNavDisabled, isRightBtnNavDisabled} = this.props;
+    const { searchInput } = this.state;
+
     return (
-      <div className='navContainer'>
-        <button
-          id='back'
-          className='nav'
-          disabled={isNavDisabled || isLeftBtnNavDisabled}
-          onClick={this.handleDisplayedData}
-        >
-          Назад
-        </button>
-        <button
-          id='forward'
-          className='nav'
-          disabled={isNavDisabled || isRightBtnNavDisabled}
-          onClick={this.handleDisplayedData}
-        >
-          Вперед
-        </button>
+      <div className="searchContainer">
+        <input
+          type="text"
+          placeholder="Type data to search"
+          value={searchInput}
+          className="searchInput"
+          onChange={this.handleSearchInput}
+          name="searchInput"
+        />
       </div>
-    )
+    );
   }
+}
+
+function Table(props) {
+  const { data, firstUserOnPage } = props;
+
+  return (
+    <React.Fragment>
+      <table className="table">
+        <thead>
+          <tr>
+            <th onClick={() => props.sort("id")}>ID</th>
+            <th onClick={() => props.sort("firstName")}>First Name</th>
+            <th onClick={() => props.sort("lastName")}>Last Name</th>
+            <th onClick={() => props.sort("email")}>Email</th>
+            <th onClick={() => props.sort("phone")}>Phone</th>
+          </tr>
+        </thead>
+        <tbody>
+          {
+            data.slice(firstUserOnPage, firstUserOnPage + 50).map(item => {
+              return (
+                <Row
+                  key={Math.random()}
+                  item={item}
+                  onRowClickHandle={() => props.onRowClickHandle(item)}
+                />
+              );
+            })
+          }
+        </tbody>
+      </table>
+    </React.Fragment>
+  );
+}
+
+function Row(props) {
+  const { id, firstName, lastName, email, phone } = props.item;
+
+  return (
+    <tr
+    className="row"
+    onClick={() => props.onRowClickHandle()}
+    >
+      <td>{id}</td>
+      <td>{firstName}</td>
+      <td>{lastName}</td>
+      <td>{email}</td>
+      <td>{phone}</td>
+    </tr>
+  );
+}
+
+function Description(props) {
+  const { firstName, lastName, description } = props.itemToShow;
+  const { streetAddress, city, state, zip } = props.itemToShow.address;
+
+  return (
+    <div className="description">
+      <div>
+        Chosen user: <span className="boldText">{firstName} {lastName}</span>
+        </div>
+      <p>
+        Description:
+      </p>
+      <textarea
+        readOnly
+        type="text"
+        className="textarea"
+        value={description}
+      />
+      <p>
+        Street Address: <span className="boldText">{streetAddress}</span>
+      </p>
+      <p>
+        City: <span className="boldText">{city}</span>
+      </p>
+      <p>
+        State: <span className="boldText">{state}</span>
+      </p>
+      <div>
+        Zip: <span className="boldText">{zip}</span>
+      </div>
+    </div>
+  );
 }
 
 ReactDOM.render(
